@@ -21,6 +21,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
+            'pk',
             'username',
             'email',
             'first_name',
@@ -36,3 +37,9 @@ class UserSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 "No permitimos el registro con una cuenta de Yahoo")
         return email
+
+    def create(self, validate_data):
+        profile = validate_data.pop('profile')
+        user = User.objects.create(**validate_data)
+        Profile.objects.create(user=user, **profile)
+        return user
