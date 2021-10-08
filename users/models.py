@@ -7,7 +7,7 @@ User = get_user_model()
 class Profile(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, related_name='profile')
-    total_fortune = models.DecimalField(max_digits=19, decimal_places=10)
+    total_fortune = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
-        return self.user
+        return self.user.email

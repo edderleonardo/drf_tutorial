@@ -1,11 +1,22 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
+from users.models import Profile
 
 User = get_user_model()
 
 
+class ProfileSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Profile
+        fields = [
+            'total_fortune',
+        ]
+
+
 class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True)
+    profile = ProfileSerializer()
 
     class Meta:
         model = User
@@ -15,6 +26,7 @@ class UserSerializer(serializers.ModelSerializer):
             'first_name',
             'last_name',
             'is_staff',
+            'profile',
         ]
 
     def validate_email(self, email):
