@@ -10,6 +10,7 @@ class ListUsers(APIView):
     serializer_class = UserSerializer
 
     def get(self, request, format=None):
+        """get all users in the model"""
         all_users = Users.objects.all()
         serializers = UserSerializer(all_users, many=True)
         return Response(serializers.data)
