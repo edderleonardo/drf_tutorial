@@ -1,6 +1,6 @@
 
-# Created by https://www.toptal.com/developers/gitignore/api/python,django,visualstudiocode,pycharm,vim
-# Edit at https://www.toptal.com/developers/gitignore?templates=python,django,visualstudiocode,pycharm,vim
+# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,django,pycharm,vim,python
+# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,django,pycharm,vim,python
 
 ### Django ###
 *.log
@@ -357,4 +357,4 @@ tags
 .history
 .ionide
 
-# End of https://www.toptal.com/developers/gitignore/api/python,django,visualstudiocode,pycharm,vim
+# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,django,pycharm,vim,python
