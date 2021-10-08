@@ -5,6 +5,8 @@ User = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(required=True)
+
     class Meta:
         model = User
         fields = [
@@ -14,3 +16,11 @@ class UserSerializer(serializers.ModelSerializer):
             'last_name',
             'is_staff',
         ]
+
+    def validate_email(self, email):
+        email_domain = email.split('@')[1]
+
+        if email_domain == 'yahoo.com':
+            raise serializers.ValidationError(
+                "No permitimos el registro con una cuenta de Yahoo")
+        return email
