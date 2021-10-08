@@ -30,30 +30,33 @@ class ListUsers(generics.ListCreateAPIView):
     serializer_class = UserSerializer
 
 
-class UsersDetails(APIView):
+# class UsersDetails(APIView):
+#     serializer_class = UserSerializer
+
+#     def get_object(self, pk):
+#         try:
+#             return Users.objects.get(pk=pk)
+#         except Users.DoesNotExist:
+#             raise Http404
+
+#     def get(self, request, pk, format=None):
+#         """Get user detail"""
+#         user = self.get_object(pk)
+#         serializers = UserSerializer(user)
+#         return Response(serializers.data)
+
+#     def put(self, request, pk, format=None):
+#         user = self.get_object(pk)
+#         serializers = UserSerializer(user, data=request.data)
+#         if serializers.is_valid():
+#             serializers.save()
+#             return Response(serializers.data)
+#         return Response(serializers.errors)
+
+#     def delete(self, request, pk, format=None):
+#         user = self.get_object(pk)
+#         user.delete()
+#         return Response(status=status.HTTP_204_NO_CONTENT)
+class UsersDetails(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Users.objects.all()
     serializer_class = UserSerializer
-
-    def get_object(self, pk):
-        try:
-            return Users.objects.get(pk=pk)
-        except Users.DoesNotExist:
-            raise Http404
-
-    def get(self, request, pk, format=None):
-        """Get user detail"""
-        user = self.get_object(pk)
-        serializers = UserSerializer(user)
-        return Response(serializers.data)
-
-    def put(self, request, pk, format=None):
-        user = self.get_object(pk)
-        serializers = UserSerializer(user, data=request.data)
-        if serializers.is_valid():
-            serializers.save()
-            return Response(serializers.data)
-        return Response(serializers.errors)
-
-    def delete(self, request, pk, format=None):
-        user = self.get_object(pk)
-        user.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
