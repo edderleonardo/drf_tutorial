@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.http import Http404
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from users.api.serializers import UserSerializer
@@ -48,3 +49,8 @@ class UsersDetails(APIView):
             serializers.save()
             return Response(serializers.data)
         return Response(serializers.errors)
+
+    def delete(self, request, pk, format=None):
+        user = self.get_object(pk)
+        user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
