@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.http import Http404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from users.api.serializers import UserSerializer
@@ -23,3 +24,19 @@ class ListUsers(APIView):
             serializers.save()
             return Response(serializers.data)
         return Response(serializers.errors)
+
+
+class UsersDetails(APIView):
+    serializer_class = UserSerializer
+
+    def get_object(self, pk):
+        try:
+            return Users.objects.get(pk=pk)
+        except Users.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        """Get user detail"""
+        user = self.get_object(pk)
+        serializers = UserSerializer(user)
+        return Response(serializers.data)
