@@ -40,3 +40,11 @@ class UsersDetails(APIView):
         user = self.get_object(pk)
         serializers = UserSerializer(user)
         return Response(serializers.data)
+
+    def put(self, request, pk, format=None):
+        user = self.get_object(pk)
+        serializers = UserSerializer(user, data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data)
+        return Response(serializers.errors)
