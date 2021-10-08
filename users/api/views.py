@@ -14,3 +14,12 @@ class ListUsers(APIView):
         all_users = Users.objects.all()
         serializers = UserSerializer(all_users, many=True)
         return Response(serializers.data)
+
+    def post(self, request):
+        """create a new user"""
+        serializers = UserSerializer(data=request.data)
+
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data)
+        return Response(serializers.errors)
