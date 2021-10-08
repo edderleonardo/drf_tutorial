@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.http import Http404
-from rest_framework import status
+from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from users.api.serializers import UserSerializer
@@ -8,23 +8,26 @@ from users.api.serializers import UserSerializer
 Users = get_user_model()
 
 
-class ListUsers(APIView):
+# class ListUsers(APIView):
+#     serializer_class = UserSerializer
+
+#     def get(self, request, format=None):
+#         """get all users in the model"""
+#         all_users = Users.objects.all()
+#         serializers = UserSerializer(all_users, many=True)
+#         return Response(serializers.data)
+
+#     def post(self, request):
+#         """create a new user"""
+#         serializers = UserSerializer(data=request.data)
+
+#         if serializers.is_valid():
+#             serializers.save()
+#             return Response(serializers.data)
+#         return Response(serializers.errors)
+class ListUsers(generics.ListCreateAPIView):
+    queryset = Users.objects.all()
     serializer_class = UserSerializer
-
-    def get(self, request, format=None):
-        """get all users in the model"""
-        all_users = Users.objects.all()
-        serializers = UserSerializer(all_users, many=True)
-        return Response(serializers.data)
-
-    def post(self, request):
-        """create a new user"""
-        serializers = UserSerializer(data=request.data)
-
-        if serializers.is_valid():
-            serializers.save()
-            return Response(serializers.data)
-        return Response(serializers.errors)
 
 
 class UsersDetails(APIView):
